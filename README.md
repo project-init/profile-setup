@@ -1,4 +1,4 @@
-# Bash Profile Setup
+# Profile Setup
 
 Repository used to house useful aliases, scripts, and other files around bash profile setup. The goal of this repo is
 that you could copy the folders/bash_profile in to your user directory, and have everything automatically load up as
@@ -7,6 +7,10 @@ needed. Then to add anything, simply append to an existing file, or add a new on
 ## Quick Start
 
 1. Run `./setup.sh`.
+2. Install [brew](https://brew.sh/)
+3. Install [mise](https://mise.jdx.dev/getting-started.html)
+4. Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
+5. Install [Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/#install-postman-on-mac)
 
 ## Directory Holdings
 
