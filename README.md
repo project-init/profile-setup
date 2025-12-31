@@ -12,6 +12,10 @@ needed. Then to add anything, simply append to an existing file, or add a new on
 4. Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
 5. Install [Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/#install-postman-on-mac)
 
+### Installs for Aliases/Functions/Scripts
+
+1. Install [fzf](https://github.com/junegunn/fzf)
+
 ## Directory Holdings
 
 ### Aliases
