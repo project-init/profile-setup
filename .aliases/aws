@@ -1,0 +1,1 @@
+alias awsps="export AWS_PROFILE=\$( perl -n -e'/\[profile (.*)\]/ && print \"\$1\n\"' $HOME/.aws/config | fzf )"
