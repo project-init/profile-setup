@@ -6,3 +6,18 @@ docker_bash() {
 docker_sh() {
     docker run --rm -it --entrypoint /bin/sh $1
 }
+
+# Stop all running containers, prune all Docker resources (containers, images, networks, volumes), and remove any remaining volumes.
+docker_reset() {
+  set -e
+  
+  if [ -n "$(docker ps -q)" ]; then
+    docker stop -t 30 $(docker ps -q);
+  fi
+
+  docker system prune -a -f --volumes
+
+  if [ -n "$(docker volume ls -q)" ]; then
+    docker volume rm $(docker volume ls -q) 2>/dev/null || true;
+  fi
+}
