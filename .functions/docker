@@ -20,4 +20,4 @@ docker_reset() {
   if [ -n "$(docker volume ls -q)" ]; then
     docker volume rm $(docker volume ls -q) 2>/dev/null || true;
   fi
-}
+} 
