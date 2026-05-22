@@ -26,7 +26,7 @@ echo "Preparing setup files..."
 unzip -q "$WORK_DIR/profile-setup.zip" -d "$WORK_DIR"
 
 cd "$WORK_DIR/profile-setup-main"
-chmod +x setup.sh scripts/clone_project_init_repos.sh
+chmod +x setup.sh
 
 echo "Starting interactive setup..."
 ./setup.sh

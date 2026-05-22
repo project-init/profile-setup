@@ -6,7 +6,7 @@ needed. Then to add anything, simply append to an existing file, or add a new on
 
 ## Quick Start
 
-Run the installer without downloading this repository first:
+Run the profile setup without downloading this repository first:
 
 ```sh
 bash <(curl -fsSL https://raw.githubusercontent.com/project-init/profile-setup/main/install.sh)
@@ -14,58 +14,68 @@ bash <(curl -fsSL https://raw.githubusercontent.com/project-init/profile-setup/m
 
 ### Setup Flow
 
-1. Install [brew](https://brew.sh/)
-2. Start setup with the `curl` command above, or by running `./setup.sh` from a local checkout.
-3. When prompted by `setup.sh`, install the required user tools with Homebrew:
-   - [Bun](https://bun.sh/)
-   - [GitHub CLI](https://cli.github.com/)
-   - [mas](https://github.com/mas-cli/mas)
-   - [Postman](https://learning.postman.com/docs/getting-started/installation/installation-and-updates/#install-postman-on-mac)
-   - [Go](https://go.dev/)
-   - [TypeScript](https://www.typescriptlang.org/)
-4. Install or update [Xcode](https://apps.apple.com/us/app/xcode/id497799835) from the Mac App Store, select it for command line tools, accept the license, and run first-launch setup.
-5. Configure Git with the user's name and email.
-6. Complete the interactive GitHub SSH setup.
-7. `setup.sh` then runs the repository clone script and clones all `project-init` repositories into `~/Desktop/vnext`.
-8. Install [mise](https://mise.jdx.dev/getting-started.html)
-9. Install [Docker](https://docs.docker.com/desktop/setup/install/mac-install/)
+1. Install [brew](https://brew.sh/).
+2. Run the profile setup command above, or run `./setup.sh` from a local checkout.
+3. Install the one-time tools listed below as needed.
+4. Configure Git and GitHub SSH.
+5. Create `~/Desktop/vnext` and clone the `project-init` repositories you need.
 
-### Xcode Setup
+### One-Time Installs
 
-The setup script uses `mas` to install or update Xcode from the Mac App Store. The user may need to be signed in to the App Store before this step can complete.
+Install the common development tools:
 
-After Xcode is installed, the script runs:
+```sh
+brew install bun gh go typescript
+brew install --cask postman
+```
 
-- `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`
-- `sudo xcodebuild -license accept`
-- `xcodebuild -runFirstLaunch`
+Install [mise](https://mise.jdx.dev/getting-started.html) and [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/) if your project needs them.
+
+Install or update [Xcode](https://apps.apple.com/us/app/xcode/id497799835) from the Mac App Store.
+
+After Xcode is installed, configure it:
+
+```sh
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -license accept
+xcodebuild -runFirstLaunch
+```
 
 ### Git Configuration
 
-The setup script asks for the user's Git name and email, then writes them to `~/.gitconfig` using global Git configuration.
+Configure Git with your name and email:
 
-It also configures:
-
-- `init.defaultBranch` as `main`
-- `pull.rebase` as `false`
-- GitHub HTTPS clone URLs to use SSH through `git@github.com:`
+```sh
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+```
 
 ### GitHub SSH and Repository Setup
 
-The setup script walks each user through GitHub access in this order:
-
-1. Enter the email address for the GitHub SSH key.
-2. Create or reuse `~/.ssh/id_ed25519_github`.
-3. Add the key to the local SSH agent.
-4. Authenticate GitHub CLI with SSH using `gh auth login`.
-5. Upload the public key to the user's GitHub account.
-6. Verify SSH access to GitHub.
-7. Run `scripts/clone_project_init_repos.sh` to create `~/Desktop/vnext` and clone every repository returned by GitHub for the `project-init` organization.
-
-You can rerun the repository clone step directly:
+Set up SSH access for GitHub:
 
 ```sh
-./scripts/clone_project_init_repos.sh
+ssh-keygen -t ed25519 -C "you@example.com" -f ~/.ssh/id_ed25519_github
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_github
+gh auth login --hostname github.com --git-protocol ssh --web
+gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "$(hostname)-project-init"
+ssh -T git@github.com
+```
+
+Create a workspace for repositories:
+
+```sh
+mkdir -p ~/Desktop/vnext
+cd ~/Desktop/vnext
+```
+
+Clone repositories from the [`project-init` organization](https://github.com/orgs/project-init/repositories) as needed:
+
+```sh
+gh repo clone project-init/REPO_NAME
 ```
 
 ### Installs for Aliases/Functions/Scripts
